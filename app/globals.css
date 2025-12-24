@@ -1,0 +1,244 @@
+:root {
+  color-scheme: light dark;
+  font-family: var(--font-family, "Inter"), system-ui, sans-serif;
+  --bg-gradient: radial-gradient(circle at top left, #f8fafc, #e2e8f0);
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(255, 255, 255, 0.4);
+  --card-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  width: min(680px, 92vw); /* Slightly wider for better spacing */
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.calendar-card {
+  background: var(--card-bg);
+  border-radius: 24px; /* More modern rounding */
+  padding: 40px;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  transition: transform 0.3s ease;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.calendar-cell {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-radius: 16px; /* Match outer card */
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+  user-select: none;
+  border: 1px solid transparent; /* Prevent layout shift on hover border */
+}
+
+.calendar-cell:active {
+  transform: scale(0.95);
+}
+
+.calendar-cell:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+  z-index: 10;
+}
+
+.calendar-cell:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08); /* Softer shadow */
+  z-index: 5;
+}
+
+.calendar-cell span {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+/* Spark effect optimized */
+.calendar-spark {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(circle at center, rgba(14, 165, 233, 0.3), transparent 70%);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.calendar-cell[data-active="true"] .calendar-spark {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+.calendar-cell.today {
+  background: rgba(14, 165, 233, 0.1);
+  color: #0284c7;
+  border-color: rgba(14, 165, 233, 0.2);
+  font-weight: 700;
+}
+
+.calendar-caption {
+  text-align: center;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.calendar-caption h1 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.calendar-caption p {
+  margin: 8px 0 0;
+  font-size: 15px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.nav-button {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  padding: 8px;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: rgba(15, 23, 42, 0.05);
+  transform: scale(1.1);
+}
+
+.nav-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.nav-button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.animate-enter {
+  animation: enter-grid 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes enter-grid {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Improved Holiday Themes with brighter, modern gradients and better text contrast */
+.calendar-cell.theme-new-year {
+  background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%);
+  color: #78350F;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+
+.calendar-cell.theme-valentines {
+  background: linear-gradient(135deg, #FDA4AF 0%, #F43F5E 100%);
+  color: white;
+}
+
+.calendar-cell.theme-april-fools {
+  background: linear-gradient(135deg, #A7F3D0 0%, #34D399 100%);
+  color: #064E3B;
+}
+
+.calendar-cell.theme-independence {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #EF4444 50%, #DC2626 100%);
+  color: white;
+}
+
+.calendar-cell.theme-halloween {
+  background: linear-gradient(135deg, #F97316 0%, #7C3AED 100%);
+  color: white;
+}
+
+.calendar-cell.theme-thanksgiving {
+  background: linear-gradient(135deg, #D97706 0%, #92400E 100%);
+  color: white;
+}
+
+.calendar-cell.theme-christmas {
+  background: linear-gradient(135deg, #10B981 0%, #DC2626 100%);
+  color: white;
+}
+
+.calendar-cell.theme-mlk {
+  background: linear-gradient(135deg, #1F2937 0%, #4B5563 100%);
+  color: white;
+}
+
+.calendar-cell.theme-presidents,
+.calendar-cell.theme-memorial,
+.calendar-cell.theme-labor,
+.calendar-cell.theme-veterans {
+  background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+  color: white;
+}
+
+.calendar-cell.theme-juneteenth {
+  background: linear-gradient(135deg, #DC2626 0%, #1F2937 50%, #10B981 100%);
+  color: white;
+}
+
+.calendar-cell.theme-columbus {
+  background: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+  color: white;
+}
+
+
