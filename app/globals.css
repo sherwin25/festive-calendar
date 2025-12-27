@@ -19,9 +19,14 @@ body {
   padding: 0;
   display: flex;
   min-height: 100vh;
+  /* Mobile Optimizations */
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
   align-items: center;
   justify-content: center;
   background: var(--bg-gradient);
+  background-attachment: fixed;
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
