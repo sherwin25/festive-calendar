@@ -5,8 +5,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Calendar Spark",
-  description: "A playful interactive monthly calendar ready for Vercel."
+  title: "Festive Calendar",
+  description: "Interactive holiday calendar.",
 };
 
 export default function RootLayout({
